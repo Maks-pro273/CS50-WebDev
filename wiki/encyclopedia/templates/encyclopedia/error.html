@@ -1,0 +1,16 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block body %}
+    <h1>Error 404</h1>
+
+    <p>
+	    You need help?
+	    I can return you to home page with this magic link
+	    <a href="{% url 'encyclopedia:index' %}">return home</a>
+    </p>
+
+{% endblock %}

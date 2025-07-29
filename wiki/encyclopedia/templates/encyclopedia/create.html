@@ -1,0 +1,29 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Creating new article
+{% endblock %}
+
+{% block body %}
+    <h1>Create article</h1>
+    {% if error %}
+    <h4>Please change the name of the article. Similar article is alredy created <a href="/wiki/{{title}}">{{title}}</a></h4>
+    {% endif %}
+    <form method="POST" action="{{ url }}" class="col-lg-7" style="padding: 0;">
+    	{% csrf_token %}
+        <label class="form-label">Please enter title</label>
+        <div class="input-group mb-3">
+          <input class="form-control" type="text" name="title" value="{{ title }}" {% if edit %}readonly{% endif %}>
+        </div>
+
+        <div class="input-group mb-3">
+            <textarea name="content" placeholder="Write your article in markdown" class="form-control" rows=13>{{ content }}</textarea>
+        </div>
+
+        <div>
+            <button type="submit" name="btn" value="Publish" class="btn btn-secondary">Publish</button>
+            <button type="submit" name="btn" value="Preview" class="btn btn-primary">Preview</button>
+        </div>
+    </form>
+
+{% endblock %}

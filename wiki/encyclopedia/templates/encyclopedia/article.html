@@ -1,0 +1,29 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+
+	{{ content|safe }}
+
+
+	{% if not preview %}
+	<a href="{{url}}/editing" class="btn btn-secondary btn-sm">Edit this article</a>
+	{% endif %}
+
+
+	{% if preview %}
+	<form method="POST" action="{{url}}">
+		{% csrf_token %}
+
+		<!-- Передаємо дані знову, щоб не втратити їх -->
+		<input type="hidden" name="title" value="{{ title }}">
+		<input type="hidden" name="content" value="{{ content_md }}">
+
+		<button type="submit" name="btn" value="Editing" class="btn btn-secondary">Back to editing</button>
+		<button type="submit" name="btn" value="Publish" class="btn btn-primary">Publish</button>
+	</form>
+	{% endif %}
+{% endblock %}
