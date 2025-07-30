@@ -24,6 +24,7 @@ def index(request):
 
 def get_article(request, article):
 	# Захист від не правильно написанного посилання
+	title = None
 	for get_title in util.list_entries():
 		if get_title.lower() == article.replace(" ","").lower():
 			title = get_title
@@ -52,15 +53,22 @@ def search(request):
 		article_search = request.POST.get("searched")
 		article_search = article_search.replace(" ","").lower()
 		ARTICLES = [art.lower() for art in util.list_entries()]
+		TITLES = []
+
+		for titles in util.list_entries():
+			content = util.get_entry(titles).lstrip()
+			title = content[content.find("# ")+2:content.find("\n")]
+			TITLES.append(title)
 
 		if article_search in ARTICLES:
 			return HttpResponseRedirect(f"/wiki/{article_search}")
 		else:
 			Matches = []
 			for article in util.list_entries():
-				if article_search in article.lower():
-					content = util.get_entry(article).lstrip()
-					title = content[content.find("# ")+2:content.find("\n")]
+				content = util.get_entry(article).lstrip()
+				title = content[content.find("# ")+2:content.find("\n")]
+
+				if article_search in article.lower() or article_search in title.replace(" ", "").lower():
 					content_md = content.split(f"# {title}", 1)[1]
 					description = content_md.split("\n#", 1)[0]
 					if len(description) > 130:
