@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-import markdown2
+import markdown
 import random
 from . import util
 
@@ -14,7 +14,7 @@ def index(request):
 		description = content_md.split("\n#", 1)[0]
 		if len(description) > 130:
 			description = description[:127].rsplit(" ", 1)[0] + "..."
-		description = markdown2.markdown(description)
+		description = markdown.markdown(description)
 		Titles_names.append((title, article_name, description))
 
 	return render(request, "encyclopedia/index.html", {
@@ -33,7 +33,7 @@ def get_article(request, article):
 	if title not in util.list_entries():
 		return render(request, "encyclopedia/error.html")
 	else:
-		content = markdown2.markdown(util.get_entry(title))
+		content = markdown.markdown(util.get_entry(title), extensions=['fenced_code', 'codehilite'])
 		# Дістаємо заголовок з html який був markdown
 		h1_title = content[content.find("<h1>")+4:content.find("</h1>")]
 		return render(request, "encyclopedia/article.html", {
@@ -65,7 +65,7 @@ def search(request):
 					description = content_md.split("\n#", 1)[0]
 					if len(description) > 130:
 						description = description[:127].rsplit(" ", 1)[0] + "..."
-					description = markdown2.markdown(description)
+					description = markdown.markdown(description)
 					Matches.append((title, article, description))
 			return render(request, "encyclopedia/search.html", {
 						"entries": Matches
@@ -79,7 +79,7 @@ def create(request):
 		url_title = title.replace(" ","")
 		content = request.POST.get("content")
 		content_md = "# " + title + "\n" + content
-		content_html = markdown2.markdown(content_md)
+		content_html = markdown.markdown(content_md)
 
 
 		action_btn = request.POST.get("btn")
@@ -125,7 +125,7 @@ def editing(request, article):
 	if request.method == "POST":
 		content_raw = request.POST.get("content")
 		content_save =  "# " + title + "\n" + content_raw
-		content_html = markdown2.markdown(content_save)
+		content_html = markdown.markdown(content_save)
 		action_btn = request.POST.get("btn")
 		
 
