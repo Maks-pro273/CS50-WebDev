@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Mail{% endblock %}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="{% static 'mail/styles.css' %}">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+        {% block script %}
+        {% endblock %}
+
+        <style>
+        body{
+            font-weight: 450 !important;
+        }
+        .section-label {
+            font-size: 11px;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            margin-top: 20px;
+            margin-left: 12px;
+        }
+
+        /* Стилі для list-group-item (використовуємо Bootstrap) */
+        .list-group-item {
+            border: 0 !important;
+            padding: 8px 12px;
+            margin-bottom: 2px;
+            border-radius: 6px;
+            background: transparent;
+            color: #374151;
+        }
+
+        .list-group-item:hover {
+            font-weight: 600
+        }
+
+        /* Активний стан */
+        .list-group-item.active {
+            background-color: #EAEAE8 !important;
+            color: #090704 !important;
+            border: none;
+            font-weight: 450
+        }
+        svg{
+            /*vertical-align: text-bottom;*/
+            /*margin-right: 0.5rem;*/
+        }
+
+        .rounded-pill{
+            position: absolute;
+            left: -8px;
+        }
+        .row > *{
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        .icon-btn{
+            padding: 2px;
+            border-radius: 50rem;
+            border: none;
+            color: #374151;
+        }
+        .icon-btn:hover{
+            color: black;
+        }
+
+        .icon-btn:last-child{
+            margin-left: 0.5rem !important;
+        }
+        .inside-letter{
+            min-height: 30px;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

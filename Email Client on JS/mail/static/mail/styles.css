@@ -1,0 +1,12 @@
+textarea {
+    min-height: 400px;
+}
+#badge{
+    width: 8px;
+    height: 8px;
+    font-size: 0px;
+}
+
+button .list-group-item{
+    border: 10px red !important;
+}
