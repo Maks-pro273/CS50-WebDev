@@ -1,0 +1,307 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="{% static 'WebScraper/script.js' %}"></script>
+  <!-- <link href="{% static 'WebScraper/bootstrap.mininum.css' %}" rel="stylesheet"> -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+  <title>Parser</title>
+<style>*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+img {
+  vertical-align: middle;
+}
+
+button,
+input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+button {
+  overflow: visible;
+  text-transform: none;
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled {
+  cursor: default;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+  width: 100%;
+}
+
+.input-group .form-control {
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: 100%;
+  margin-bottom: 0;
+  display: table-cell;
+}
+
+.input-group-btn {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+  position: relative;
+  display: table-cell;
+}
+
+.input-group-btn>.btn {
+  position: relative;
+}
+
+.input-group-btn:last-child>.btn {
+  margin-left: -1px;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #222;
+  background-color: #fafafa;
+}
+
+#topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 15px calc(1% + 15px);
+  z-index: 1000;
+}
+
+#topbar h1 {
+  margin: 0;
+  font-size: 1.5em;
+  display: inline-block;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+#domain_form {
+  margin: 1%;
+  text-align: center;
+}
+
+#domain_form .input-group {
+  margin: 0 auto;
+}
+
+.form-control {
+  height: 42px;
+  padding: 8px 12px;
+  font-size: 1em;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px 0 0 10px;
+  outline: none;
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 20px;
+  margin-bottom: 0;
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 0 10px 10px 0;
+  text-decoration: none;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #4a6cf7;
+  border-color: #4a6cf7;
+  height: 42px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #3451d1;
+  border-color: #3451d1;
+}
+
+.btn-primary:active {
+  background-color: #3451d1;
+  border-color: #3451d1;
+}
+
+#Result {
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+#Result>* {
+  float: left;
+  width: 48%;
+  margin: 1%;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  -webkit-transition: -webkit-transform 0.2s, box-shadow 0.3s;
+  -moz-transition: -moz-transform 0.2s, box-shadow 0.3s;
+  -o-transition: -o-transform 0.2s, box-shadow 0.3s;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+#Result>img {
+  padding: 0;
+}
+
+#Result>h1,
+#Result>h2,
+#Result>h3 {
+  width: 98%;
+  clear: both;
+  margin-bottom: 15px;
+}
+
+#Result hr {
+  width: 100%;
+  clear: both;
+  margin: 15px 0;
+  padding: 0;
+  height: 1px;
+  background-color: #ccc;
+  border: 0;
+}
+
+#Result>*:hover {
+  -webkit-transform: translateY(-4px);
+  -moz-transform: translateY(-4px);
+  -o-transform: translateY(-4px);
+  -ms-transform: translateY(-4px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+#Result img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+@media (max-width:992px) {
+  #Result>* {
+    width: 98%;
+    float: none;
+    margin: 10px 1%;
+  }
+
+  #domain_form .input-group {
+    max-width: 100%;
+  }
+}
+
+@media (max-width:767px) {
+  #topbar h1 {
+    font-size: 1.2em;
+  }
+
+  .container {
+    margin-top: 80px;
+  }
+}
+
+@media (max-width:480px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .form-control,
+  .btn-primary {
+    height: 38px;
+    font-size: 0.9em;
+  }
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+</style>
+</head>
+<body>
+  <header id="topbar">
+    <div>
+      <h1>Parser</h1>
+    </div>
+  </header>
+
+  <main class="container main-container">
+    <form id="domain_form" method="post">
+      <div class="input-group">
+        <input type="text" class="form-control" id="link-input" placeholder="https://example.com">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="submit">Send</button>
+        </span>
+      </div>
+    </form>
+
+    <div id="Result" class="clearfix"></div>
+  </main>
+</body>
+</html>
