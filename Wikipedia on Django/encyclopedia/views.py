@@ -110,7 +110,7 @@ def create(request):
 						"error": True
 					})
 			util.save_entry(url_title, content_md)
-			return HttpResponseRedirect(reverse("encyclopedia:article, args=[url_title]"))
+			return HttpResponseRedirect(reverse("encyclopedia:article", args=[url_title]))
 
 
 		elif action_btn == "Editing":
